@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ArchitectureComponentsKotlin</string>
     <string name="action_settings">Settings</string>
+    <string name="word_label">Word</string>
+    <string name="hint_word">Word..</string>
+    <string name="meaning_label">Meaning</string>
+    <string name="hint_meaning">Meaning..</string>
+    <string name="btn_save_label">SAVE</string>
+    <string name="btn_delete_label">DELETE</string>
 </resources>
