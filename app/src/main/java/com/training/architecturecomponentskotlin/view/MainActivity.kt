@@ -68,6 +68,12 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
                 val word = Word(it.getStringExtra(EXTRA_KEY_WORD), it.getStringExtra(EXTRA_KEY_MEANING))
                 mWordViewModel.insertWord(word)
             }
+        } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
+            data?.let {
+                val word = mWordViewModel.getWordByName(it.getStringExtra(EXTRA_KEY_WORD))
+                mWordViewModel.deleteWord(word!!)
+                Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
+            }
         } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_ERROR) {
             Toast.makeText(this, getString(R.string.empty_word_not_saved), Toast.LENGTH_SHORT).show()
 

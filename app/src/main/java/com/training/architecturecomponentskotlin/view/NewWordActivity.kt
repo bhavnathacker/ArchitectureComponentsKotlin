@@ -4,13 +4,11 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.training.architecturecomponentskotlin.R
-import com.training.architecturecomponentskotlin.utils.EXTRA_KEY_MEANING
-import com.training.architecturecomponentskotlin.utils.EXTRA_KEY_WORD
-import com.training.architecturecomponentskotlin.utils.RESULT_ERROR
-import com.training.architecturecomponentskotlin.utils.RESULT_SAVE
+import com.training.architecturecomponentskotlin.utils.*
 
 class NewWordActivity : AppCompatActivity() {
 
@@ -21,6 +19,7 @@ class NewWordActivity : AppCompatActivity() {
 
     private lateinit var mWord: String
     private lateinit var mMeaning: String
+    private var isNewWord :Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +38,13 @@ class NewWordActivity : AppCompatActivity() {
             mWordEditText.setText(mWord)
             mMeaningEditText.setText(mMeaning)
             mWordEditText.isEnabled = false
+            isNewWord = false
+        }
+
+        if(isNewWord) {
+            mDeleteBtn.visibility = View.GONE
+        } else {
+            mDeleteBtn.visibility = View.VISIBLE
         }
 
 
@@ -56,7 +62,9 @@ class NewWordActivity : AppCompatActivity() {
         }
 
         mDeleteBtn.setOnClickListener {
-            //TODO delete action
+            intent.putExtra(EXTRA_KEY_WORD, mWordEditText.text.toString())
+            setResult(RESULT_DELETE, intent)
+            finish()
         }
     }
 }
