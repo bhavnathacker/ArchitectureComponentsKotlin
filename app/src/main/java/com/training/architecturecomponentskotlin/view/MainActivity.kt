@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.model.Word
@@ -18,7 +19,14 @@ import com.training.architecturecomponentskotlin.viewmodel.WordViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
+
+    override fun onItemClick(view: View, position: Int) {
+        val intent = Intent(this, NewWordActivity::class.java)
+        intent.putExtra(EXTRA_KEY_WORD, mAdapter.getWords()[position].name)
+        intent.putExtra(EXTRA_KEY_MEANING, mAdapter.getWords()[position].meaning)
+        startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+    }
 
     private lateinit var mRecyclerView:RecyclerView
     private lateinit var mAdapter: WordListAdapter
@@ -31,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         mRecyclerView = findViewById(R.id.recyclerView)
-        mAdapter = WordListAdapter(this)
+        mAdapter = WordListAdapter(this, this)
         mAdapter.setWords(mWords)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(this)

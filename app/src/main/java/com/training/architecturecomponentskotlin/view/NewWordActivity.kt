@@ -19,6 +19,9 @@ class NewWordActivity : AppCompatActivity() {
     private lateinit var mSaveBtn: Button
     private lateinit var mDeleteBtn: Button
 
+    private lateinit var mWord: String
+    private lateinit var mMeaning: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,16 @@ class NewWordActivity : AppCompatActivity() {
         mMeaningEditText = findViewById(R.id.meaning_text)
         mSaveBtn = findViewById(R.id.btn_save)
         mDeleteBtn = findViewById(R.id.btn_delete)
+
+        var extras = intent.extras
+        extras?.let {
+            mWord = extras.get(EXTRA_KEY_WORD) as String
+            mMeaning = extras.get(EXTRA_KEY_MEANING) as String
+            mWordEditText.setText(mWord)
+            mMeaningEditText.setText(mMeaning)
+            mWordEditText.isEnabled = false
+        }
+
 
         mSaveBtn.setOnClickListener {
             val intent = Intent()
