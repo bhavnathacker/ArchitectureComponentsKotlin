@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -91,8 +92,31 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_clear_list -> {
+                clearListAction()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun clearListAction() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.app_name))
+        builder.setMessage(getString(R.string.msg_clear_list))
+
+        builder.setPositiveButton(getString(R.string.label_yes)) {
+            dialog, _ ->
+            mWordViewModel.deleteAllWords()
+            Toast.makeText(this, getString(R.string.list_cleared), Toast.LENGTH_SHORT).show()
+        }
+
+        builder.setNegativeButton(getString(R.string.label_no)) {
+            dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 }

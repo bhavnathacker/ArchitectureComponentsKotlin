@@ -9,4 +9,9 @@
     <string name="btn_delete_label">DELETE</string>
     <string name="empty_word_not_saved">Empty word not saved</string>
     <string name="word_deleted">Word Deleted</string>
+    <string name="action_clear_list">Clear List</string>
+    <string name="msg_clear_list">Are you sure you wish to clear list?</string>
+    <string name="list_cleared">List is cleared</string>
+    <string name="label_yes">YES</string>
+    <string name="label_no">NO</string>
 </resources>
