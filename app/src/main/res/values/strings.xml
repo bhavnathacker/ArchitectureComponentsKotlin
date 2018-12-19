@@ -7,4 +7,5 @@
     <string name="hint_meaning">Meaning..</string>
     <string name="btn_save_label">SAVE</string>
     <string name="btn_delete_label">DELETE</string>
+    <string name="empty_word_not_saved">Empty word not saved</string>
 </resources>
