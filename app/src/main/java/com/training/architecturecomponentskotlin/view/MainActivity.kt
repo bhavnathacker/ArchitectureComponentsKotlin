@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         })
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             val intent = Intent(this, NewWordActivity::class.java)
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
         }
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         builder.setMessage(getString(R.string.msg_clear_list))
 
         builder.setPositiveButton(getString(R.string.label_yes)) {
-            dialog, _ ->
+            _, _ ->
             mWordViewModel.deleteAllWords()
             Toast.makeText(this, getString(R.string.list_cleared), Toast.LENGTH_SHORT).show()
         }
