@@ -18,5 +18,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/recyclerView"
-    android:background="@android:color/holo_orange_light"/>
+    android:background="@android:color/darker_gray"/>
 </android.support.constraint.ConstraintLayout>
