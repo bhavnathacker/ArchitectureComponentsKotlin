@@ -11,17 +11,21 @@ abstract class WordRoomDatabase: RoomDatabase() {
 
     companion object {
         @Volatile
-        var database: WordRoomDatabase? = null
+        var dbInstance: WordRoomDatabase? = null
 
-        fun getInstance(context: Context): WordRoomDatabase? {
-            if(database == null) {
-                synchronized(WordRoomDatabase::class.java) {
-                    if(database == null) {
-                        database = Room.databaseBuilder(context.applicationContext, WordRoomDatabase::class.java, "word_database").build()
-                    }
-                }
+        var dbName = "word_database"
+
+        fun getInstance(context: Context): WordRoomDatabase {
+            val tempInstance = dbInstance
+            if(tempInstance != null) {
+                return tempInstance
             }
-            return database
+            synchronized(this){
+                val instance = Room.databaseBuilder(context.applicationContext, WordRoomDatabase::class.java,dbName).build()
+                dbInstance = instance
+                return instance
+            }
+
         }
     }
 }

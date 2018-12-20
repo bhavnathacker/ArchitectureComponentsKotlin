@@ -72,7 +72,9 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
             data?.let {
                 val word = mWordViewModel.getWordByName(it.getStringExtra(EXTRA_KEY_WORD))
-                mWordViewModel.deleteWord(word!!)
+                word?.let {
+                    mWordViewModel.deleteWord(word)
+                }
                 Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_ERROR) {

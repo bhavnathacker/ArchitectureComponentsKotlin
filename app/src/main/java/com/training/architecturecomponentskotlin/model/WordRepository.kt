@@ -5,33 +5,33 @@ import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
 
 class WordRepository(application: Application) {
-    private val wordDao:WordDao?
-    private val allWords: LiveData<List<Word>>?
+    private val wordDao:WordDao
+    private val allWords: LiveData<List<Word>>
 
     init {
         val db = WordRoomDatabase.getInstance(application)
-        wordDao = db?.wordDao()
-        allWords = wordDao?.getAllWords()
+        wordDao = db.wordDao()
+        allWords = wordDao.getAllWords()
     }
 
     fun insertWord(word:Word){
-        InsertAsyncTask(wordDao!!).execute(word)
+        InsertAsyncTask(wordDao).execute(word)
     }
 
     fun deleteWord(word:Word) {
-        DeleteAsyncTask(wordDao!!).execute(word)
+        DeleteAsyncTask(wordDao).execute(word)
     }
 
     fun deleteAllWords() {
-        DeleteAllAsyncTask(wordDao!!).execute()
+        DeleteAllAsyncTask(wordDao).execute()
     }
 
     fun getAllWords(): LiveData<List<Word>> {
-        return allWords!!
+        return allWords
     }
 
     fun getWordByName(name:String): Word? {
-        val allWordsList = allWords?.value?.toList()
+        val allWordsList = allWords.value?.toList()
 
         allWordsList?.iterator()?.forEach {
             if(it.name == name) {
