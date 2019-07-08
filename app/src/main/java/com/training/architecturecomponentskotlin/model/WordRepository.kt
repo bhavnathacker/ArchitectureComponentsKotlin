@@ -12,6 +12,7 @@ class WordRepository(application: Application) {
         val db = WordRoomDatabase.getInstance(application)
         wordDao = db.wordDao()
         allWords = wordDao.getAllWords()
+        //Test comment
     }
 
     fun insertWord(word:Word){
