@@ -1,8 +1,8 @@
 package com.training.architecturecomponentskotlin.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.training.architecturecomponentskotlin.model.Word
 import com.training.architecturecomponentskotlin.model.WordRepository
 

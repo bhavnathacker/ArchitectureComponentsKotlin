@@ -1,18 +1,19 @@
 package com.training.architecturecomponentskotlin.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.model.Word
 import com.training.architecturecomponentskotlin.utils.*
@@ -22,14 +23,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
+    private val wordActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        processResult(result.resultCode, result.data)
+    }
+
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, NewWordActivity::class.java)
         intent.putExtra(EXTRA_KEY_WORD, mAdapter.getWords()[position].name)
         intent.putExtra(EXTRA_KEY_MEANING, mAdapter.getWords()[position].meaning)
-        startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+        //startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+        wordActivityLauncher.launch(intent)
     }
 
-    private lateinit var mRecyclerView:RecyclerView
+    private lateinit var mRecyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var mAdapter: WordListAdapter
     private var mWords: List<Word> = mutableListOf<Word>()
     private lateinit var mWordViewModel: WordViewModel
@@ -43,7 +49,8 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         mAdapter = WordListAdapter(this, this)
         mAdapter.setWords(mWords)
         mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this)
 
         mWordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
 
@@ -56,30 +63,48 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         fab.setOnClickListener {
             val intent = Intent(this, NewWordActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+            //startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+            wordActivityLauncher.launch(intent)
         }
     }
 
+/*
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_SAVE) {
-            data?.let {
-                val word = Word(it.getStringExtra(EXTRA_KEY_WORD), it.getStringExtra(EXTRA_KEY_MEANING))
-                mWordViewModel.insertWord(word)
-            }
-        } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_DELETE) {
-            data?.let {
-                val word = mWordViewModel.getWordByName(it.getStringExtra(EXTRA_KEY_WORD))
-                word?.let {
-                    mWordViewModel.deleteWord(word)
-                }
-                Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
-            }
-        } else if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_ERROR) {
-            Toast.makeText(this, getString(R.string.empty_word_not_saved), Toast.LENGTH_SHORT).show()
+        processResult(resultCode, data)
+    }
+*/
 
+    private fun processResult(
+        resultCode: Int,
+        data: Intent?
+    ) {
+        when (resultCode) {
+            RESULT_SAVE -> {
+                data?.let {
+                    val word = Word(
+                        it.getStringExtra(EXTRA_KEY_WORD)!!,
+                        it.getStringExtra(EXTRA_KEY_MEANING)!!
+                    )
+                    mWordViewModel.insertWord(word)
+                }
+            }
+            RESULT_DELETE -> {
+                data?.let {
+                    val word = mWordViewModel.getWordByName(it.getStringExtra(EXTRA_KEY_WORD)!!)
+                    word?.let {
+                        mWordViewModel.deleteWord(word)
+                    }
+                    Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
+                }
+            }
+            RESULT_ERROR -> {
+                Toast.makeText(this, getString(R.string.empty_word_not_saved), Toast.LENGTH_SHORT)
+                    .show()
+
+            }
         }
     }
 

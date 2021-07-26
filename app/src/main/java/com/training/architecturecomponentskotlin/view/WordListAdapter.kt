@@ -1,7 +1,7 @@
 package com.training.architecturecomponentskotlin.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.model.Word
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class WordListAdapter(private val mContext: Context, private var mItemClickListener: ItemClickListener) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
+class WordListAdapter(private val mContext: Context, private var mItemClickListener: ItemClickListener) : androidx.recyclerview.widget.RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
     private lateinit var mWords: List<Word>
 
@@ -42,7 +42,7 @@ class WordListAdapter(private val mContext: Context, private var mItemClickListe
         }
     }
 
-    class WordViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class WordViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
         var wordTextView: TextView = itemView.findViewById(R.id.textView)
     }
 }
