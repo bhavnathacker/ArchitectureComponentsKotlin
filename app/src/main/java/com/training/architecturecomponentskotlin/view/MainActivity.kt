@@ -13,10 +13,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.architecturecomponentskotlin.R
+import com.training.architecturecomponentskotlin.databinding.ActivityMainBinding
 import com.training.architecturecomponentskotlin.model.Word
 import com.training.architecturecomponentskotlin.utils.*
 import com.training.architecturecomponentskotlin.viewmodel.WordViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
@@ -37,12 +37,15 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
     private var mWords: List<Word> = mutableListOf<Word>()
     private lateinit var mWordViewModel: WordViewModel
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        mRecyclerView = findViewById(R.id.recyclerView)
+        mRecyclerView = binding.contentMain.recyclerView
         mAdapter = WordListAdapter(this, this)
         mAdapter.setWords(mWords)
         mRecyclerView.adapter = mAdapter
@@ -57,7 +60,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         })
 
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             val intent = Intent(this, NewWordActivity::class.java)
             wordActivityLauncher.launch(intent)
         }
