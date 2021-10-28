@@ -9,13 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.utils.*
+import kotlinx.android.synthetic.main.activity_new_word.*
 
 class NewWordActivity : AppCompatActivity() {
-
-    private lateinit var mWordEditText: EditText
-    private lateinit var mMeaningEditText: EditText
-    private lateinit var mSaveBtn: Button
-    private lateinit var mDeleteBtn: Button
 
     private lateinit var mWord: String
     private lateinit var mMeaning: String
@@ -26,43 +22,39 @@ class NewWordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_word)
 
-        mWordEditText = findViewById(R.id.word_text)
-        mMeaningEditText = findViewById(R.id.meaning_text)
-        mSaveBtn = findViewById(R.id.btn_save)
-        mDeleteBtn = findViewById(R.id.btn_delete)
 
         var extras = intent.extras
         extras?.let {
             mWord = extras.get(EXTRA_KEY_WORD) as String
             mMeaning = extras.get(EXTRA_KEY_MEANING) as String
-            mWordEditText.setText(mWord)
-            mMeaningEditText.setText(mMeaning)
-            mWordEditText.isEnabled = false
+            word_text.setText(mWord)
+            meaning_text.setText(mMeaning)
+            word_text.isEnabled = false
             isNewWord = false
         }
 
         if(isNewWord) {
-            mDeleteBtn.visibility = View.GONE
+            btn_delete.visibility = View.GONE
         } else {
-            mDeleteBtn.visibility = View.VISIBLE
+            btn_delete.visibility = View.VISIBLE
         }
 
 
-        mSaveBtn.setOnClickListener {
+        btn_save.setOnClickListener {
             val intent = Intent()
-            if(TextUtils.isEmpty(mWordEditText.text) || TextUtils.isEmpty(mMeaningEditText.text)) {
+            if(TextUtils.isEmpty(word_text.text) || TextUtils.isEmpty(meaning_text.text)) {
                 setResult(RESULT_ERROR, intent)
             } else {
-                intent.putExtra(EXTRA_KEY_WORD, mWordEditText.text.toString())
-                intent.putExtra(EXTRA_KEY_MEANING, mMeaningEditText.text.toString())
+                intent.putExtra(EXTRA_KEY_WORD, word_text.text.toString())
+                intent.putExtra(EXTRA_KEY_MEANING, meaning_text.text.toString())
                 setResult(RESULT_SAVE, intent)
             }
             finish()
 
         }
 
-        mDeleteBtn.setOnClickListener {
-            intent.putExtra(EXTRA_KEY_WORD, mWordEditText.text.toString())
+        btn_delete.setOnClickListener {
+            intent.putExtra(EXTRA_KEY_WORD, word_text.text.toString())
             setResult(RESULT_DELETE, intent)
             finish()
         }
