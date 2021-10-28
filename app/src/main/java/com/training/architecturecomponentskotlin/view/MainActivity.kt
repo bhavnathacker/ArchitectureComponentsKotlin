@@ -1,37 +1,34 @@
 package com.training.architecturecomponentskotlin.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.model.Word
 import com.training.architecturecomponentskotlin.utils.*
 import com.training.architecturecomponentskotlin.viewmodel.WordViewModel
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
-    private val wordActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        processResult(result.resultCode, result.data)
-    }
+    private val wordActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            processResult(result.resultCode, result.data)
+        }
 
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, NewWordActivity::class.java)
         intent.putExtra(EXTRA_KEY_WORD, mAdapter.getWords()[position].name)
         intent.putExtra(EXTRA_KEY_MEANING, mAdapter.getWords()[position].meaning)
-        //startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
         wordActivityLauncher.launch(intent)
     }
 
@@ -49,10 +46,9 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         mAdapter = WordListAdapter(this, this)
         mAdapter.setWords(mWords)
         mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(this)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        mWordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
+        mWordViewModel = ViewModelProvider(this).get(WordViewModel::class.java)
 
         mWordViewModel.getAllWords().observe(this, Observer { words ->
             words?.let {
@@ -63,19 +59,9 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
 
         fab.setOnClickListener {
             val intent = Intent(this, NewWordActivity::class.java)
-            //startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
             wordActivityLauncher.launch(intent)
         }
     }
-
-/*
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        processResult(resultCode, data)
-    }
-*/
 
     private fun processResult(
         resultCode: Int,
@@ -97,7 +83,8 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
                     word?.let {
                         mWordViewModel.deleteWord(word)
                     }
-                    Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.word_deleted), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             RESULT_ERROR -> {
@@ -132,14 +119,12 @@ class MainActivity : AppCompatActivity(), WordListAdapter.ItemClickListener {
         builder.setTitle(getString(R.string.app_name))
         builder.setMessage(getString(R.string.msg_clear_list))
 
-        builder.setPositiveButton(getString(R.string.label_yes)) {
-            _, _ ->
+        builder.setPositiveButton(getString(R.string.label_yes)) { _, _ ->
             mWordViewModel.deleteAllWords()
             Toast.makeText(this, getString(R.string.list_cleared), Toast.LENGTH_SHORT).show()
         }
 
-        builder.setNegativeButton(getString(R.string.label_no)) {
-            dialog, _ ->
+        builder.setNegativeButton(getString(R.string.label_no)) { dialog, _ ->
             dialog.dismiss()
         }
 

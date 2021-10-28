@@ -1,12 +1,10 @@
 package com.training.architecturecomponentskotlin.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.utils.*
 import kotlinx.android.synthetic.main.activity_new_word.*
@@ -15,7 +13,7 @@ class NewWordActivity : AppCompatActivity() {
 
     private lateinit var mWord: String
     private lateinit var mMeaning: String
-    private var isNewWord :Boolean = true
+    private var isNewWord: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +31,7 @@ class NewWordActivity : AppCompatActivity() {
             isNewWord = false
         }
 
-        if(isNewWord) {
+        if (isNewWord) {
             btn_delete.visibility = View.GONE
         } else {
             btn_delete.visibility = View.VISIBLE
@@ -42,7 +40,7 @@ class NewWordActivity : AppCompatActivity() {
 
         btn_save.setOnClickListener {
             val intent = Intent()
-            if(TextUtils.isEmpty(word_text.text) || TextUtils.isEmpty(meaning_text.text)) {
+            if (TextUtils.isEmpty(word_text.text) || TextUtils.isEmpty(meaning_text.text)) {
                 setResult(RESULT_ERROR, intent)
             } else {
                 intent.putExtra(EXTRA_KEY_WORD, word_text.text.toString())

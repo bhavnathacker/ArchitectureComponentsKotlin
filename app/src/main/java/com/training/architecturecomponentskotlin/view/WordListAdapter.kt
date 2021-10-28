@@ -1,32 +1,35 @@
 package com.training.architecturecomponentskotlin.view
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.training.architecturecomponentskotlin.R
 import com.training.architecturecomponentskotlin.model.Word
-import kotlinx.android.synthetic.main.list_item.view.*
 
-class WordListAdapter(private val mContext: Context, private var mItemClickListener: ItemClickListener) : androidx.recyclerview.widget.RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
+class WordListAdapter(
+    private val mContext: Context,
+    private var mItemClickListener: ItemClickListener
+) : androidx.recyclerview.widget.RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
     private lateinit var mWords: List<Word>
 
     fun getWords() = mWords
 
-    fun setWords(words: List<Word>){
+    fun setWords(words: List<Word>) {
         mWords = words
         notifyDataSetChanged()
     }
 
     interface ItemClickListener {
-        fun onItemClick(view:View, position: Int)
+        fun onItemClick(view: View, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
-        return WordViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false))
+        return WordViewHolder(
+            LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -42,7 +45,8 @@ class WordListAdapter(private val mContext: Context, private var mItemClickListe
         }
     }
 
-    class WordViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
+    class WordViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var wordTextView: TextView = itemView.findViewById(R.id.textView)
     }
 }
