@@ -10,6 +10,6 @@ Featured in androidweekly.net, Issue#476. Source code for this video is availabl
 
 
 Youtube Video at this link (https://www.youtube.com/watch?v=Fljt1jMmRtI)
-Featured in androidweekly.net, Issue#490. Source code for this video is available at branches: "viewBinding/starter" & "viewBinding/final"
+Featured in androidweekly.net, Issue#490. Source code for this video is available at branches: "viewbinding/starter" & "viewbinding/final"
 
-![example branch parameter](https://androidweekly.net/issues/issue-490/badge?branch=viewBinding/starter)
+![example branch parameter](https://androidweekly.net/issues/issue-490/badge?branch=viewbinding/starter)
