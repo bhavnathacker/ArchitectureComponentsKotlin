@@ -7,3 +7,9 @@ Youtube Video at this link (https://www.youtube.com/watch?v=VfGHsQrOoPs)
 Featured in androidweekly.net, Issue#476. Source code for this video is available at branch: "onActivityResult-deprecated"
 
 ![example branch parameter](https://androidweekly.net/issues/issue-476/badge?branch=onActivityResult-deprecated)
+
+
+Youtube Video at this link (https://www.youtube.com/watch?v=Fljt1jMmRtI)
+Featured in androidweekly.net, Issue#490. Source code for this video is available at branches: "viewBinding/starter" & "viewBinding/final"
+
+![example branch parameter](https://androidweekly.net/issues/issue-490/badge?branch=viewBinding/starter)
